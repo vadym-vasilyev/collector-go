@@ -18,9 +18,9 @@ ENV WORKPATH=$APP_PATH/src
 COPY src $WORKPATH
 WORKDIR $WORKPATH
 
-RUN go build -o collector-sercice .
+RUN go build -o collector-service .
 
 # Expose port 8081 to the world:
-EXPOSE 8081
+EXPOSE 8080
 
-CMD ["./collector-sercice"]
+CMD ["./collector-service"]

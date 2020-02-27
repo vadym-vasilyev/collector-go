@@ -1,0 +1,165 @@
+basePath: /api/v1
+definitions:
+  app_record.Element:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/app_record.Element'
+        type: array
+      height:
+        example: 100
+        type: integer
+      id:
+        example: 122323
+        type: integer
+      name:
+        example: Self Destruct Button
+        type: string
+      pos_x:
+        example: 10
+        type: number
+      pos_y:
+        example: 15
+        type: number
+      radius:
+        example: 70
+        type: integer
+      touched:
+        example: true
+        type: boolean
+      type:
+        example: Button
+        type: string
+      width:
+        example: 200
+        type: integer
+    type: object
+  app_record.Record:
+    properties:
+      id:
+        example: 1
+        type: integer
+      screen_layout:
+        $ref: '#/definitions/app_record.Element'
+        type: object
+      screen_name:
+        example: Main screen
+        type: string
+      timestamp:
+        example: 1582759519
+        type: integer
+      touch_events:
+        items:
+          $ref: '#/definitions/app_record.TouchEvent'
+        type: array
+      transition_to:
+        example: 2
+        type: integer
+    type: object
+  app_record.RecordsBatch:
+    properties:
+      app_token:
+        type: string
+      client_type:
+        example: iPhone10
+        type: string
+      records:
+        items:
+          $ref: '#/definitions/app_record.Record'
+        type: array
+      session_id:
+        example: dyw234kjbb
+        type: string
+    type: object
+  app_record.TouchEvent:
+    properties:
+      pos_x:
+        example: 10
+        type: number
+      pos_y:
+        example: 20
+        type: number
+      touch_type:
+        example: 10
+        type: integer
+    type: object
+  rest_errors.RestErrStruct:
+    properties:
+      causes:
+        items:
+          type: object
+        type: array
+      error:
+        example: internal server error
+        type: string
+      message:
+        example: error description
+        type: string
+      status:
+        example: 500
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: Collector service API
+  license: {}
+  termsOfService: http://swagger.io/terms/
+  title: Collector API
+  version: "1.0"
+paths:
+  /collect/{app_token}:
+    post:
+      consumes:
+      - application/json
+      description: add by json account
+      parameters:
+      - description: Application token
+        in: path
+        name: app_token
+        required: true
+        type: string
+      - description: Add records batch
+        in: body
+        name: batchRecords
+        required: true
+        schema:
+          $ref: '#/definitions/app_record.RecordsBatch'
+      produces:
+      - application/json
+      responses:
+        "202": {}
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+      summary: Add a batch of records
+      tags:
+      - collect
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: pong
+          schema:
+            type: string
+        "500":
+          description: ok
+          schema:
+            type: string
+      summary: ping example
+      tags:
+      - ping
+swagger: "2.0"
