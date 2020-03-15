@@ -27,6 +27,56 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/collect/{app_token}": {
+            "get": {
+                "description": "get record by app token and session id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "collect"
+                ],
+                "summary": "Get batch records by app token and session id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Application token",
+                        "name": "app_token",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Session id",
+                        "name": "session_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest_errors.RestErrStruct"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/rest_errors.RestErrStruct"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/rest_errors.RestErrStruct"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "add by json account",
                 "consumes": [
@@ -161,9 +211,12 @@ var doc = `{
         "app_record.Record": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer",
-                    "example": 1
+                "app_token": {
+                    "type": "string"
+                },
+                "client_type": {
+                    "type": "string",
+                    "example": "iPhone10"
                 },
                 "screen_layout": {
                     "type": "object",
@@ -172,6 +225,10 @@ var doc = `{
                 "screen_name": {
                     "type": "string",
                     "example": "Main screen"
+                },
+                "session_id": {
+                    "type": "string",
+                    "example": "dyw234kjbb"
                 },
                 "timestamp": {
                     "type": "integer",
@@ -192,22 +249,11 @@ var doc = `{
         "app_record.RecordsBatch": {
             "type": "object",
             "properties": {
-                "app_token": {
-                    "type": "string"
-                },
-                "client_type": {
-                    "type": "string",
-                    "example": "iPhone10"
-                },
                 "records": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/app_record.Record"
                     }
-                },
-                "session_id": {
-                    "type": "string",
-                    "example": "dyw234kjbb"
                 }
             }
         },

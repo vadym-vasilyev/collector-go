@@ -22,6 +22,8 @@ func mapUrls() {
 
 	v1.POST("/collect/:app_token", collector.Collect)
 
+	v1.GET("/internal/collect/:app_token", collector.Get)
+
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json") // The url pointing to API definition
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 }

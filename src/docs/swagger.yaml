@@ -36,14 +36,19 @@ definitions:
     type: object
   app_record.Record:
     properties:
-      id:
-        example: 1
-        type: integer
+      app_token:
+        type: string
+      client_type:
+        example: iPhone10
+        type: string
       screen_layout:
         $ref: '#/definitions/app_record.Element'
         type: object
       screen_name:
         example: Main screen
+        type: string
+      session_id:
+        example: dyw234kjbb
         type: string
       timestamp:
         example: 1582759519
@@ -58,18 +63,10 @@ definitions:
     type: object
   app_record.RecordsBatch:
     properties:
-      app_token:
-        type: string
-      client_type:
-        example: iPhone10
-        type: string
       records:
         items:
           $ref: '#/definitions/app_record.Record'
         type: array
-      session_id:
-        example: dyw234kjbb
-        type: string
     type: object
   app_record.TouchEvent:
     properties:
@@ -108,6 +105,40 @@ info:
   version: "1.0"
 paths:
   /collect/{app_token}:
+    get:
+      consumes:
+      - application/json
+      description: get record by app token and session id
+      parameters:
+      - description: Application token
+        in: path
+        name: app_token
+        required: true
+        type: string
+      - description: Session id
+        in: query
+        name: session_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+      summary: Get batch records by app token and session id
+      tags:
+      - collect
     post:
       consumes:
       - application/json

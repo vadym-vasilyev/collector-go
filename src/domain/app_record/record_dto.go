@@ -1,14 +1,13 @@
 package app_record
 
 type RecordsBatch struct {
-	AppToken   string   `json:"app_token"`
-	ClientType string   `json:"client_type" example:"iPhone10"`
-	SessionId  string   `json:"session_id" example:"dyw234kjbb"`
-	Records    []Record `json:"records"`
+	Records []Record `json:"records"`
 }
 
 type Record struct {
-	id           uint32       `json:"id" example:"1"`
+	AppToken     string       `json:"app_token"`
+	ClientType   string       `json:"client_type" example:"iPhone10"`
+	SessionId    string       `json:"session_id" example:"dyw234kjbb"`
 	ScreenName   string       `json:"screen_name" example:"Main screen"`
 	Timestamp    int64        `json:"timestamp" example:"1582759519"`
 	ScreenLayout Element      `json:"screen_layout"`
