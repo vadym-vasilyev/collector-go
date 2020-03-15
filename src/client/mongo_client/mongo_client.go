@@ -3,6 +3,7 @@ package mongo_client
 import (
 	"context"
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"os"
 	"strings"
@@ -78,7 +79,7 @@ func (c *mongoClient) SaveMany(collectionName string, records []interface{}) err
 }
 
 func (c *mongoClient) Fetch(collectionName string, record interface{}) (*mongo.Cursor, error) {
-	cursor, err := c.database.Collection(collectionName).Find(context.Background(), record)
+	cursor, err := c.database.Collection(collectionName).Find(context.Background(), bson.D{})
 	if err != nil {
 		logger.Error(fmt.Sprintf("Get an error during find documents for filter %#v", record), err)
 		return nil, err

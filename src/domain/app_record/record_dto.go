@@ -5,7 +5,7 @@ type RecordsBatch struct {
 }
 
 type Record struct {
-	AppToken     string       `json:"app_token"`
+	AppToken     string       `json:"app_token" example:"finder_app"`
 	ClientType   string       `json:"client_type" example:"iPhone10"`
 	SessionId    string       `json:"session_id" example:"dyw234kjbb"`
 	ScreenName   string       `json:"screen_name" example:"Main screen"`

@@ -27,56 +27,6 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/collect/{app_token}": {
-            "get": {
-                "description": "get record by app token and session id",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "collect"
-                ],
-                "summary": "Get batch records by app token and session id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Application token",
-                        "name": "app_token",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Session id",
-                        "name": "session_id",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {},
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/rest_errors.RestErrStruct"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/rest_errors.RestErrStruct"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/rest_errors.RestErrStruct"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "add by json account",
                 "consumes": [
@@ -109,6 +59,58 @@ var doc = `{
                 ],
                 "responses": {
                     "202": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/rest_errors.RestErrStruct"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/rest_errors.RestErrStruct"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/rest_errors.RestErrStruct"
+                        }
+                    }
+                }
+            }
+        },
+        "/internal/collect/{app_token}": {
+            "get": {
+                "description": "get record by app token and session id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "collect"
+                ],
+                "summary": "Get batch records by app token and session id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Application token",
+                        "name": "app_token",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Session id",
+                        "name": "session_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -212,7 +214,8 @@ var doc = `{
             "type": "object",
             "properties": {
                 "app_token": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "finder_app"
                 },
                 "client_type": {
                     "type": "string",

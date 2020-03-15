@@ -52,10 +52,10 @@ func Collect(c *gin.Context) {
 // @Failure 400 {object} rest_errors.RestErrStruct
 // @Failure 404 {object} rest_errors.RestErrStruct
 // @Failure 500 {object} rest_errors.RestErrStruct
-// @Router /collect/{app_token} [get]
+// @Router /internal/collect/{app_token} [get]
 func Get(c *gin.Context) {
 	sessionId := c.Query("session_id")
-	appToken := c.GetString("app_token")
+	appToken := c.Param("app_token")
 	if recordsBatch, restErr := services.CollectorService.Get(appToken, sessionId); restErr != nil {
 		c.JSON(restErr.Status(), restErr)
 	} else {

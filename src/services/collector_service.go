@@ -21,7 +21,7 @@ func (c *collectorService) Get(appToken string, sessionId string) (*app_record.R
 		AppToken:  appToken,
 		SessionId: sessionId,
 	}
-	if records, err := record.FindByExample(); err != nil {
+	if records, err := record.FindByTokenAndSession(); err != nil {
 		return nil, err
 	} else {
 		rb := app_record.RecordsBatch{Records: records}

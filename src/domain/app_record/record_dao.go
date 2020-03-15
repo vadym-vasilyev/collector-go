@@ -6,6 +6,7 @@ import (
 	"github.com/vadym-vasilyev/collector-go/src/client/mongo_client"
 	"github.com/vadym-vasilyev/collector-go/src/utils/logger"
 	"github.com/vadym-vasilyev/collector-go/src/utils/rest_errors"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 const (
@@ -30,8 +31,9 @@ func (record *Record) Save() rest_errors.RestErr {
 	return nil
 }
 
-func (record *Record) FindByExample() ([]Record, rest_errors.RestErr) {
-	if cursor, err := mongo_client.Client.Fetch(mongoCollectionName, record); err != nil {
+func (record *Record) FindByTokenAndSession() ([]Record, rest_errors.RestErr) {
+	filter := bson.M{"AppToken": record.AppToken, "SessionId": record.SessionId}
+	if cursor, err := mongo_client.Client.Fetch(mongoCollectionName, filter); err != nil {
 		return nil, rest_errors.NewInternalServerError("Can't fetch records", err)
 	} else {
 		var fetchedRecords []Record

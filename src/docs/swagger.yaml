@@ -37,6 +37,7 @@ definitions:
   app_record.Record:
     properties:
       app_token:
+        example: finder_app
         type: string
       client_type:
         example: iPhone10
@@ -105,40 +106,6 @@ info:
   version: "1.0"
 paths:
   /collect/{app_token}:
-    get:
-      consumes:
-      - application/json
-      description: get record by app token and session id
-      parameters:
-      - description: Application token
-        in: path
-        name: app_token
-        required: true
-        type: string
-      - description: Session id
-        in: query
-        name: session_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200": {}
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/rest_errors.RestErrStruct'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/rest_errors.RestErrStruct'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/rest_errors.RestErrStruct'
-      summary: Get batch records by app token and session id
-      tags:
-      - collect
     post:
       consumes:
       - application/json
@@ -172,6 +139,41 @@ paths:
           schema:
             $ref: '#/definitions/rest_errors.RestErrStruct'
       summary: Add a batch of records
+      tags:
+      - collect
+  /internal/collect/{app_token}:
+    get:
+      consumes:
+      - application/json
+      description: get record by app token and session id
+      parameters:
+      - description: Application token
+        in: path
+        name: app_token
+        required: true
+        type: string
+      - description: Session id
+        in: query
+        name: session_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/rest_errors.RestErrStruct'
+      summary: Get batch records by app token and session id
       tags:
       - collect
   /ping:
